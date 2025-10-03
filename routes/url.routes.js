@@ -1,7 +1,11 @@
 import express from "express";
 import { Router } from "express";
 import { URL } from "../models/url.models.js";
-import generateShortURL from "../controllers/url.controllers.js";
+const urlRouter = Router()
+import { generateShortURL } from "../controllers/url.controllers.js";
+import { redirectURL } from "../controllers/url.controllers.js";
 
+urlRouter.post("/url",generateShortURL);
+urlRouter.get("/:shortId",redirectURL)
 
-Router.post(/url,generateShortURL)
+export default urlRouter;

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>URL Shortener</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      width: 300px;
+      text-align: center;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin: 8px 0px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+
+    }
+    button {
+      background: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px;
+      width: 100%;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>URL Shortener</h2>
+      <input type="text" id="input_url" placeholder="enter your URL"/>
+      <button type="submit" onclick="shortenURL()">Shorten</button>
+      <input type="text" id="short_url" placeholder="ur shorter url">
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+
+ <script>
+    async function shortenURL(){
+        event.preventDefault()
+        const redirectURL = document.getElementById("input_url").value
+        const response =  await axios.post("http://localhost:3000/url",{
+            url : redirectURL
+        });
+      document.getElementById("short_url").value = response.data.shortUrl;
+    }
+        
+ </script>
+
+
+
+
+</body>
+</html>
