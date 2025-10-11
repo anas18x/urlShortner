@@ -11,10 +11,15 @@ async function generateShortURL(req, res) {
     return res.status(200).json({ shortUrl: `http://localhost:3000/${findURL.shortId}` });
   }
   const shortID = nanoid(8);
-  await URL.create({
-    shortId: shortID,
-    redirectURL: body.url,
+  try {
+      await URL.create({
+      shortId: shortID,
+      redirectURL: body.url,
   });
+  } catch (error) {
+     res.status(400).json({msg:"error while saving data"})
+  }
+
   return res.status(200).json({shortUrl: `http://localhost:3000/${shortID}`});
 }
 
@@ -26,7 +31,7 @@ async function redirectURL(req, res) {
     if (!response) res.send("URL not Found");
     res.redirect(response.redirectURL);
   } catch (error) {
-    console.log(error, "Error while redirecting ");
+    console.log(error, "Error while redirecting");
   }
 }
 
